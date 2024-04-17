@@ -114,13 +114,24 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
-            print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
+        """ Create a new class instance of BaseModel with given parameters.
+        
+        Usage: create <Class name> <param 1> <param 2> <param 3>...
+        Param syntax: <key name> = <value>
+        """
+        try:
+            # Split the argument by spaces
+            args = arg.split()
+            # Extract the class name
+            class_name = args[0]
+            # Checks if the class name is missing
+            if len(class_name) == 0:
+                print("** class name missing **")
+                return
+            # Checks if class exists
+            if class_name not in self.valid_classes:
+                print("** class doesn't exist **")
+                return
         new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
