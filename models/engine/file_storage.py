@@ -71,6 +71,6 @@ class FileStorage:
         class_name = new_obj['__class__']
         obj_id = obj.id
         key_obj = class_name + '.' + obj_id
-        if key_obj in self.__object.keys():
+        if key_obj in self.__objects.keys():
             print(key_obj)
             del self.__objects[key_obj]
