@@ -5,6 +5,7 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DATETIME
 import models
+from os import getenv
 
 
 Base = declarative_base()
@@ -31,7 +32,7 @@ class BaseModel:
 
 
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model"""
+        """Instantiates a new Base model"""
         if not kwargs:
             from models import storage
             self.id = str(uuid.uuid4())
@@ -45,7 +46,7 @@ class BaseModel:
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
                 elif key == 'updated_at':
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
-            if hbnb_storage_type == 'db':
+            if getenv('HBNB_TYPE_STORAGE') == 'db':
                 attr_ls = {
                     'id' : str(uuid.uuid4()),
                     'created_at' : datetime.now(),
@@ -69,14 +70,19 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        if '_sa_instance_state' in dictionary.keys():
-            del(dictionary['_sa_instance_state'])
+        dictionary = self.__dict__.copy()
+        dictionary['__class__'] = self.__class__.__name__
+
+        # Iterate over dictionary items
+        for k, v in dictionary.items():
+            # Convert datetime objects to string format
+            if isinstance(v, datetime):
+                dictionary[k] = v.isoformat()
+
+        # Remove '_sa_instance_state' key if present
+        if '_sa_instance_state' in dictionary:
+                del dictionary['_sa_instance_state']
+
         return dictionary
 
     def delete(self):

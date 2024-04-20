@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Storage engine for database """
 
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -10,11 +10,11 @@ from models.user import User
 from models.amenity import Amenity
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from os import getenv
+import os import getenv
 
 
 class_list = { "Place": Place, "City": City,"Amenity": Amenity,
-               "Review": Review, "User": User, "State": State}
+               "Review": Review, "User": User, "State": State,}
 
 
 class DBStorage:
@@ -89,6 +89,6 @@ class DBStorage:
     def reload(self):
         """creates all tables in the database"""
         Base.metadata.create_all(self.__engine)
-        session = sessionmaker(bind=self.__engine,
+        session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        self.__session = scoped_session(session)()
+        self.__session = scoped_session(session_factory)()
