@@ -4,7 +4,8 @@ import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DATETIME
-from models import hbhb_storage_type
+import models
+
 
 Base = declarative_base()
 
@@ -44,7 +45,7 @@ class BaseModel:
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
                 elif key == 'updated_at':
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
-            if hbhb_storage_type == 'db':
+            if hbnb_storage_type == 'db':
                 attr_ls = {
                     'id' : str(uuid.uuid4()),
                     'created_at' : datetime.now(),
@@ -75,7 +76,7 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary.keys():
-            del (dictionary['_sa_instance_state'])
+            del(dictionary['_sa_instance_state'])
         return dictionary
 
     def delete(self):
