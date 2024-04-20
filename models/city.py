@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 from os import getenv
 
 class City(BaseModel, Base):
-    """ The city class, contains state ID and name """
+    """ City class representation"""
     __tablename__ = 'cities'
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -15,6 +15,8 @@ class City(BaseModel, Base):
         state_id = Column(String(60),
                           ForeignKey('states.id'),
                           nullable=False)
+        places = relationship('Place', backref='cities',
+                              cascade='all, delete, delete-orphan')
     else:
         name = ''
         state_id = ''
