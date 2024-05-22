@@ -15,6 +15,7 @@ def flask_greeting2():
     """ Display greeting"""
     return "HBNB"
 
+
 @web_app.route("/c/<text>", strict_slashes=False)
 def c_text(text):
     """ formated text returned as a string"""
