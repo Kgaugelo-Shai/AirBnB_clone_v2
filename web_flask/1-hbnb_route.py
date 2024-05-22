@@ -9,6 +9,7 @@ def flask_greeting():
     """ Display greeting """
     return "Hello HBNB!"
 
+
 @web_app.route('/hbnb', strict_slashes=False)
 def flask_greeting2():
     """ Display greeting"""
