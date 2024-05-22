@@ -13,7 +13,7 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
     name = Column(String(128),
-                      nullable=False)
+                  nullable=False)
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         cities = relationship('City',
@@ -23,8 +23,8 @@ class State(BaseModel, Base):
 
         @property
         def cities(self):
-            """returns the list of City instances with state_id equals the current
-            State.id =>
+            """returns the list of City instances with state_id equals the
+            current State.id =>
             It will be a FileStorage relationship between State and City
             """
             cities_related = []

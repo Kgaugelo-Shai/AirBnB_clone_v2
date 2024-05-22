@@ -13,8 +13,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 
 
-class_list = { "Place": Place, "City": City,"Amenity": Amenity,
-               "Review": Review, "User": User, "State": State}
+class_list = {"Place": Place, "City": City, "Amenity": Amenity,
+              "Review": Review, "User": User, "State": State}
 
 
 class DBStorage:
@@ -90,9 +90,8 @@ class DBStorage:
         """creates all tables in the database"""
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
+                               expire_on_commit=False)
         self.__session = scoped_session(session)()
-
 
     def close(self):
         """ calls remove() method on the priate session attribute
