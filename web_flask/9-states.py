@@ -13,8 +13,8 @@ app = Flask(__name__)
 def states():
     """Gets an HTML page with a list of all States.
     """
-    states = storage.all(State)
-    return render_template("9-states.html", state=states)
+    state_list = storage.all(State)
+    return render_template("9-states.html", states=state_list)
 
 
 @app.route("/states/<id>", strict_slashes=False)
